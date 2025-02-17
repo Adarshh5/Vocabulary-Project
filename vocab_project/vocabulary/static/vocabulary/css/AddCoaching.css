@@ -1,0 +1,38 @@
+/* Centering the form */
+body {
+  background-color: #f8f9fa; /* Light background for better contrast */
+}
+
+/* Styling the form container */
+.card {
+  background: #fff;
+  border: none;
+}
+
+/* Custom button styling */
+.custom-btn {
+  background-color: #1D3557;
+  border-color: #1D3557;
+  color: #fff;
+  font-weight: bold;
+}
+
+.custom-btn:hover {
+  background-color: #163148; /* Slightly darker shade for hover */
+  border-color: #163148;
+}
+
+/* Improve form field styling */
+.form-control {
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Image input styling */
+.form-control-file {
+  border: 1px solid #ced4da;
+  padding: 10px;
+  border-radius: 8px;
+  width: 100%;
+  display: block;
+}
