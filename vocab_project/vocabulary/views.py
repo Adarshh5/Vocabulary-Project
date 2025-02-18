@@ -219,12 +219,9 @@ class APISection(View):
     def get(self, request):
          usr = request.user
          try:
-         
             api_mode_obj = UserApiMode.objects.get(user=usr)
             api_plan_obj = UserApiPlan.objects.filter(user=usr).last()
-            print(api_plan_obj)
             if api_plan_obj and api_plan_obj.is_expired():
-                print(api_plan_obj.is_expired())
                 api_mode_obj.api_mode = UserApiMode.DEACTIVE
                 api_mode_obj.save()
 
@@ -256,7 +253,7 @@ class APISection(View):
                 context["access_expiry"] = access_lifetime.total_seconds() // 60
                 context["message"] = "Tokens refreshed successfully!"
             except TokenError:
-                context["error"] = "Invalid or expired refresh token. Please log in again to get new tokens."
+                context["error"] = "Invalid or expired refresh token."
 
         return render(request, "vocabulary/APISection.html", context)
     

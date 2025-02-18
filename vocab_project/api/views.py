@@ -2,9 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from vocabulary.models import Word, UserApiMode, UserApiPlan, UserIdentity
 from .serializers import WordSerializer, GameSerializer, GameSerializer1, PaymentSerializer
-from django.shortcuts import get_list_or_404
 from rest_framework.permissions import IsAuthenticated
-import random
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from django.core.exceptions import ObjectDoesNotExist
@@ -18,8 +16,6 @@ class WordLookupAPIView(APIView):
             return Response({'error': 'Word not found'}, status=404)
         serializer = WordSerializer(words, many=True)
         return Response(serializer.data)
-
-
 
 
 class GameAPIView(APIView):
@@ -36,13 +32,9 @@ class GameAPIView(APIView):
     def post(self, request, format=None):
         serializer = GameSerializer1(data=request.data)
         if serializer.is_valid():
-          
             id = serializer.validated_data['id']
             word_name = serializer.validated_data['word_name']
-
-         
             word = get_object_or_404(Word, id=id)
-
             if word_name.lower() == word.word_name.lower():
                 return Response({'msg': 'Word Correct'})
             else:

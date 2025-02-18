@@ -1,7 +1,7 @@
-# VocabValt
-
+# VocabVault
+[![Demo Video](https://img.shields.io/badge/Watch-Demo-blue?style=for-the-badge)](https://drive.google.com/file/d/1EBem6zimyEBDTW-hpfBpoXEMg8hN-4PH/view?usp=sharing)
 ## Project Overview
-VocabValt is a vocabulary-building web application designed for students. Users can search for words and view comprehensive details, including:
+VocabVault is a vocabulary-building web application designed for students. Users can search for words and view comprehensive details, including:
 - Word name
 - Hindi meaning
 - Part of speech
