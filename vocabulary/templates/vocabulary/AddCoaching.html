@@ -1,0 +1,30 @@
+{% extends 'vocabulary/base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/AddCoaching.css' %}">
+
+{% endblock %}
+{% block main-content %}
+<div class="container my-5 d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card shadow-lg p-4 rounded-4" style="width: 100%; max-width: 500px;">
+    <h2 class="text-center mb-4">Add Coaching</h2>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="mb-3">
+          <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}
+            <div class="form-text">{{ field.help_text }}</div>
+          {% endif %}
+          {% for error in field.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn custom-btn w-100">Submit</button>
+    </form>
+  </div>
+</div>
+
+{% endblock main-content %}

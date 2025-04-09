@@ -1,0 +1,86 @@
+{% extends 'vocabulary/base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/Coaching.css' %}">
+{% endblock %}
+
+{% block main-content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">Offline Coaching Institutes</h1>
+    
+    <div class="row">
+        <!-- Filter Sidebar -->
+        <div class="col-lg-3 col-md-4 mb-4">
+            <div class="filter-sidebar card shadow-sm p-3 sticky-top">
+                <h4 class="mb-3 border-bottom pb-2">Filter Institutes</h4>
+                <form method="get">
+                    {% for fm in form %}
+                    <div class="form-group mb-3">
+                        <label class="form-label small mb-1">{{ fm.label }}</label>
+                        {{ fm }}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-filter w-100 mt-2">Apply Filters</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-9 col-md-8">
+            <div class="row">
+                {% for Coaching in Coachings %}
+                <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
+                    <div class="card coaching-card h-100 shadow">
+                        <span class="status-badge badge badge-{% if Coaching.status == 'Active' %}success{% else %}danger{% endif %}">
+                            {{ Coaching.status }}
+                        </span>
+                        <img src="{{ Coaching.image.url }}" class="card-img-top coaching-image" alt="{{ Coaching.coaching_institute_name }}">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">{{ Coaching.coaching_institute_name }}</h3>
+                            <div class="mb-3">
+                                <span class="text-muted">{{ Coaching.city }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <i class="fas fa-clock mr-2"></i>
+                                    <span>{{ Coaching.duration }}</span>
+                                </div>
+                                <div class="fees">
+                                    ₹{{ Coaching.fees }}
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <i class="fas fa-phone mr-2"></i>
+                                <a href="tel:{{ Coaching.contact_number }}">{{ Coaching.contact_number }}</a>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-link p-0 text-dark" type="button" data-toggle="collapse" 
+                                        data-target="#desc{{ forloop.counter }}" aria-expanded="false">
+                                    View Description ▼
+                                </button>
+                                <div class="collapse" id="desc{{ forloop.counter }}">
+                                    <div class="description-collapse mt-2">
+                                        {{ Coaching.description|linebreaks }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white">
+                            <small class="text-muted">
+                                Updated {{ Coaching.updated_at}} ago
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center">
+                    <div class="alert alert-info">
+                        No coaching institutes found.
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

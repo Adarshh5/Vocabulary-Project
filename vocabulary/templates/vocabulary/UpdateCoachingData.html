@@ -1,0 +1,123 @@
+{% extends 'vocabulary/base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/UpdateCoachingData.css' %}">
+{% endblock %}
+
+{% block main-content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <form method="POST" enctype="multipart/form-data" class="update-coaching-form">
+                <h2 class="form-header mb-4">Update Coaching Details</h2>
+                {% csrf_token %}
+                <!-- Current Image -->
+                {% if form.instance.image %}
+                <div class="text-center mb-4">
+                    <img src="{{ form.instance.image.url }}" class="current-image img-thumbnail" alt="Current Institute Image">
+                </div>
+                {% endif %}
+
+                <!-- Form Fields -->
+                <div class="form-group">
+                    <label class="form-label required">Institute Name</label>
+                    {{ form.coaching_institute_name }}
+                    {% if form.coaching_institute_name.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.coaching_institute_name.errors.0 }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Institute Image</label>
+                    <div class="custom-file">
+                        {{ form.image }}
+                        <label class="custom-file-label" for="{{ form.image.id_for_label }}">Choose file</label>
+                    </div>
+                    {% if form.image.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.image.errors.0 }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label required">City</label>
+                            {{ form.city }}
+                            {% if form.city.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.city.errors.0 }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label required">Contact Number</label>
+                            {{ form.contact_number }}
+                            {% if form.contact_number.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.contact_number.errors.0 }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label required">Course Duration</label>
+                            {{ form.duration }}
+                            {% if form.duration.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.duration.errors.0 }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label required">Course Fees</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">₹</span>
+                                </div>
+                                {{ form.fees }}
+                            </div>
+                            {% if form.fees.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.fees.errors.0 }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">About Your Institution</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.description.errors.0 }}
+                    </div>
+                    {% endif %}
+                    <small class="form-text text-muted">Maximum 1000 characters</small>
+                </div>
+
+                <div class="form-group text-center mt-5">
+                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                        <i class="fas fa-save mr-2"></i>Update Details
+                    </button>
+                    <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-lg ml-2 px-4">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

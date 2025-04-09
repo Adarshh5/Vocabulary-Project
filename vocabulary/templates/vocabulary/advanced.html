@@ -1,0 +1,36 @@
+{% extends 'vocabulary/base.html' %}
+{% load static %}
+
+{% block title %} search page {% endblock title %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'media/search.css' %}">
+{% endblock %}
+
+{% block main-content %} 
+ <section class="container-fluid ">
+    <div class="container my-5">
+      <div class="row g-5 justify-content-evenly align-items-center">
+        {% for word in words %}
+          <div class="col-12 col-lg-6  me-1 d-flex justify-content-evenly align-items-center  shadow  ">
+
+            {% if word.image %}
+              <img src="{{ word.image.url }}" class="word_image img-fluid m-1">
+            {% else %}
+              <h1>No images</h1>
+              {% endif %}    
+            <div class="m-2">
+                 <h4 class="name text_center fs-3">{{word.word_name}}</h4>
+                 <br>
+                 <p class="text_center fs-6">definition-{{word.definition}}</p>
+                 <br>
+               
+                 <a class='btn btn-info text-end' href = "{% url 'full_page'  word.id %}">details</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    
+  </section>
+{% endblock %}

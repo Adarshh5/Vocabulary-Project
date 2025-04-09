@@ -1,0 +1,44 @@
+{% extends 'vocabulary/base.html' %}
+
+{% load static %}
+{% block extra_css %}
+<link rel = 'stylesheet' href="{% static 'css/onebox.css' %}">
+{% endblock %}
+{% block main-content %} 
+<section class="container-fluid py-4">
+    <div class="container">
+        <div class="row gy-4"> <!-- Adds vertical spacing between rows -->
+            {% if SelectedWord %}
+                {% for word in SelectedWord %}
+                    <div class="col-12 col-md-6 col-lg-4 d-flex flex-column align-items-center">
+                        <div class="card shadow-sm w-100" style="border-radius: 10px;">
+                            {% if word.image %}
+                              <img src="{{ word.image.url }}" alt="{{ word.word_name }}" 
+                                   class="card-img-top img-fluid word-image" 
+                                   style="max-height: 200px; object-fit: cover; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                            {% endif %}
+                            <div class="card-body">
+                                <h4 class="card-title text-center fs-4">{{ word.word_name }}</h4>
+                                <p class="card-text text-center text-muted fs-6">Definition: {{ word.definition }}</p>
+                                <div class="d-flex justify-content-between">
+                                    <a class="btn btn-info btn-sm" href="{% url 'full_page' word.id %}">
+                                        Details
+                                    </a>
+                                    <a class="btn btn-danger btn-sm" 
+                                       href="{% url 'Delete' container_name word.id %}">
+                                        Delete Word
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <h1 class="text-center text-danger">You didn't save any Word</h1>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock main-content %}

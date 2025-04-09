@@ -1,0 +1,109 @@
+{% extends 'vocabulary/base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/ApiPlan.css' %}">
+{% endblock %}
+{% block main-content %}
+
+<div class="container">
+    <!-- Enhanced Subscription Plan Card -->
+    <div class="subscription-card">
+        <div class="ribbon">Premium</div>
+        <div class="card-header">
+            <h2>API Subscription Plan</h2>
+            <div class="price">₹500<span class="duration">/day</span></div>
+        </div>
+        <div class="card-body">
+            <ul class="features-list">
+                <li><i class="fas fa-check-circle"></i>Unlimited API Access</li>
+                <li><i class="fas fa-check-circle"></i>Advanced Word Search</li>
+                <li><i class="fas fa-check-circle"></i>Vocabulary Games</li>
+                <li><i class="fas fa-check-circle"></i>Early Feature Access</li>
+            </ul>
+            <button class="btn-subscribe" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                Subscribe Now
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced Payment Modal -->
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="header-content">
+                    <img src="{% static 'path-to-logo.png' %}" alt="PayEase" class="modal-logo">
+                    <h3 class="modal-title">Secure Payment Gateway</h3>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-summary">
+                    <div class="summary-item">
+                        <span>Subscription Plan:</span>
+                        <span>API Premium (1 Day)</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total Amount:</span>
+                        <span>₹500.00</span>
+                    </div>
+                </div>
+
+                <form method="POST" action="" id="paymentForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="upiId">Enter UPI ID</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" 
+                                   id="upiId" name="upiId" 
+                                   placeholder="username@upi" 
+                                   required
+                                   >
+                            <button type="button" class="btn-validate" >
+                                <i class="fas fa-check-circle"></i>
+                            </button>
+                        </div>
+                        <small class="form-text">Example: yourname@oksbi</small>
+                    </div>
+
+                    <div class="security-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>256-bit SSL Secured Transaction</span>
+                    </div>
+
+                    <button type="submit" class="btn-pay">
+                        Confirm Payment
+                        <i class="fas fa-lock"></i>
+                    </button>
+                </form>
+            </div>
+            
+            <div class="loading-overlay" id="modalLoading">
+                <div class="spinner"></div>
+                <p>Processing Payment...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+
+document.getElementById('paymentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const loadingOverlay = document.getElementById('modalLoading');
+    loadingOverlay.style.display = 'flex';
+    
+    // Simulate payment processing
+    setTimeout(() => {
+        this.submit();
+    }, 2000);
+});
+</script>
+{% endblock %}

@@ -1,0 +1,88 @@
+
+{% extends 'vocabulary/base.html' %}
+
+{% load static %}
+    
+{% block title %}Home Page{% endblock title %}
+    
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'media/home.css' %}">
+    {% endblock %}
+    
+    {% block main-content %}
+    
+    <section class="container-fluid">
+      <div class="container my-3">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="card mb-1 shadow-sm">
+              <div class="card-body">
+                <form method="get" class="row g-3">
+                  <div class="col-6 col-md-5">
+                    {{ form.part_of_speech.label_tag }}
+                    {{ form.part_of_speech }}
+                  </div>
+                  <div class="col-6 col-md-5">
+                    {{ form.level.label_tag }}
+                    {{ form.level }}
+                  </div>
+                  <div class="col-12 col-md-2 text-end">
+                    <button type="submit" class="btn text-white" style="background-color: #1D3557;">Apply Filters</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="container my-5">
+        <div class="row g-4">
+          {% for word in page_obj %}
+          <div class="col-12 col-md-6 col-lg-4 d-flex flex-column align-items-center shadow">
+            {% if word.image %}
+            <img src="{{ word.image.url }}" alt="{{ word.name }}" class="word_image img-fluid m-2">
+            {% endif %}
+            <div class="text-center">
+              <h4 class="name fs-4">{{ word.word_name }}</h4>
+              <p class="definition fs-6">Definition: {{ word.definition }}</p>
+              <a class="btn text-white" style="background-color: #1D3557;" href="{% url 'full_page' word.id %}">Details</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+   
+      <div class="container d-flex justify-content-center my-4">
+        {% if page_obj.paginator.num_pages > 1 %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-lg">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&part_of_speech={{ request.GET.part_of_speech }}&level={{ request.GET.level }}">
+                        &laquo; Previous
+                    </a>
+                </li>
+                {% endif %}
+    
+                <li class="page-item active">
+                    <span class="page-link">{{ page_obj.number }}</span>
+                </li>
+    
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&part_of_speech={{ request.GET.part_of_speech }}&level={{ request.GET.level }}">
+                        Next &raquo;
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% else %}
+        <div class="alert alert-info mt-3">No additional pages available</div>
+        {% endif %}
+    </div>
+    
+  </section>
+{% endblock main-content %}
