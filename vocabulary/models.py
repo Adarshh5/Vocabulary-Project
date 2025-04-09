@@ -87,7 +87,7 @@ class UserIdentity(models.Model):
 class OfflineCoaching(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     coaching_institute_name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='coaching_institutes', null=True, blank=True, default='default.png')
+    image = CloudinaryField('image')
     city = models.CharField(max_length=100)
     contact_number = models.CharField(max_length=15) 
     duration = models.CharField(max_length=30,choices=[('1 month', '1 month'),( '3 months', '3 months'), ( '6 months', '6 months'), ( '1 Year', '1 Year')])  
